@@ -2,26 +2,26 @@
 
 ```mermaid
 graph TD
-    subgraph "Client"
-        A[User's Browser / Mobile App]
+    subgraph Client
+        A["User's Browser / Mobile App"]
     end
 
     subgraph "AWS Cloud"
-        B[CloudFront CDN]
-        C[S3 Bucket for Media]
+        B["CloudFront CDN"]
+        C["S3 Bucket for Media"]
     end
 
     subgraph "Backend Infrastructure"
-        D[API Gateway / Load Balancer]
+        D["API Gateway / Load Balancer"]
         subgraph "SNS Server (Spring Boot)"
-            E[Controller Layer <br> (REST & WebSocket)]
-            F[Service Layer <br> (Business Logic)]
-            G[Repository Layer <br> (Data Access)]
+            E["Controller (REST & WebSocket)"]
+            F["Service (Business Logic)"]
+            G["Repository (Data Access)"]
         end
-        subgraph "Databases"
-            H[MySQL <br> (Users, Posts, etc.)]
-            I[Redis <br> (Cache, Pub/Sub)]
-            J[MongoDB <br> (Chat History)]
+        subgraph Databases
+            H["MySQL (Users, Posts, etc.)"]
+            I["Redis (Cache, Pub/Sub)"]
+            J["MongoDB (Chat History)"]
         end
     end
 
