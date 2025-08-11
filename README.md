@@ -3,36 +3,37 @@
 ```mermaid
 graph TD
     subgraph Client
-        A["User's Browser / Mobile App"]
+        ClientApp["User's Browser / Mobile App"]
     end
 
-    subgraph "AWS Cloud"
-        B["CloudFront CDN"]
-        C["S3 Bucket for Media"]
-    end
-
-    subgraph "Backend Infrastructure"
-        D["API Gateway / Load Balancer"]
+    subgraph Backend
+        direction LR
         subgraph "SNS Server (Spring Boot)"
-            E["Controller (REST & WebSocket)"]
-            F["Service (Business Logic)"]
-            G["Repository (Data Access)"]
+            Controller["Controller"]
+            Service["Service"]
+            Repository["Repository"]
         end
-        subgraph Databases
-            H["MySQL (Users, Posts, etc.)"]
-            I["Redis (Cache, Pub/Sub)"]
-            J["MongoDB (Chat History)"]
+        subgraph "Databases"
+            MySQL["MySQL"]
+            Redis["Redis"]
+            MongoDB["MongoDB"]
         end
     end
 
-    A --> D
-    D --> E
-    E --> F
-    F --> G
-    G --> H
-    G --> I
-    G --> J
 
-    F --> B
-    B --> C
+    subgraph "AWS Storage"
+        CloudFront["CloudFront CDN"]
+        S3["S3 Bucket"]
+    end
+
+    %% Flows
+    ClientApp -- "1. API Calls" --> Controller
+    Controller -- "2. Business Logic" --> Service
+    Service -- "3. Data Access" --> Repository
+    Repository -- "4. CRUD" --> MySQL & Redis & MongoDB
+
+    ClientApp -- "6. Upload/Download Media" --> CloudFront
+    CloudFront --> S3
+
+    Service -- "5. Generates & returns Pre-signed URL" -.-> ClientApp
 ```
