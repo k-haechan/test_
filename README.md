@@ -27,13 +27,13 @@ graph TD
     end
 
     %% Flows
-    ClientApp -- "1. API Calls" --> Controller
-    Controller -- "2. Business Logic" --> Service
-    Service -- "3. Data Access" --> Repository
-    Repository -- "4. CRUD" --> MySQL & Redis & MongoDB
+    ClientApp -- API Calls --> Controller
+    Controller -- Business Logic --> Service
+    Service -- Data Access --> Repository
+    Repository -- CRUD --> MySQL & Redis & MongoDB
 
-    ClientApp -- "6. Upload/Download Media" --> CloudFront
+    ClientApp -- Upload/Download Media --> CloudFront
     CloudFront --> S3
 
-    Service -- "5. Generates & returns Pre-signed URL" -.-> ClientApp
+    Service -.->|Generates & returns Pre-signed URL| ClientApp
 ```
